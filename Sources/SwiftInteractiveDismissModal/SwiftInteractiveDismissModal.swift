@@ -1,31 +1,32 @@
 import Foundation
 import SwiftUI
+import UIKit
 
-class InteractiveDismissModalHostingController<Content: View>: UIHostingController<Content>, UIAdaptivePresentationControllerDelegate {
+public class InteractiveDismissModalHostingController<Content: View>: UIHostingController<Content>, UIAdaptivePresentationControllerDelegate {
     var canDismissSheet = true
     var onDismissalAttempt: (() -> ())?
 
-    override func willMove(toParent parent: UIViewController?) {
+    public override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
 
         parent?.presentationController?.delegate = self
     }
 
-    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         canDismissSheet
     }
 
-    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+    public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         onDismissalAttempt?()
     }
 }
 
-struct InteractiveDismissModalView<T: View>: UIViewControllerRepresentable {
+public struct InteractiveDismissModalView<T: View>: UIViewControllerRepresentable {
     let view: T
     let canDismissSheet: Bool
     let onDismissalAttempt: (() -> ())?
 
-    func makeUIViewController(context: Context) -> InteractiveDismissModalHostingController<T> {
+    public func makeUIViewController(context: Context) -> InteractiveDismissModalHostingController<T> {
         let controller = InteractiveDismissModalHostingController(rootView: view)
 
         controller.canDismissSheet = canDismissSheet
@@ -34,7 +35,7 @@ struct InteractiveDismissModalView<T: View>: UIViewControllerRepresentable {
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: InteractiveDismissModalHostingController<T>, context: Context) {
+    public func updateUIViewController(_ uiViewController: InteractiveDismissModalHostingController<T>, context: Context) {
         uiViewController.rootView = view
 
         uiViewController.canDismissSheet = canDismissSheet
@@ -42,7 +43,7 @@ struct InteractiveDismissModalView<T: View>: UIViewControllerRepresentable {
     }
 }
 
-extension View {
+public extension View {
     func interactiveDismiss(canDismissSheet: Bool, onDismissalAttempt: (() -> ())? = nil) -> some View {
         InteractiveDismissModalView(
             view: self,
