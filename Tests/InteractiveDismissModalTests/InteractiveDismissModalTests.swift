@@ -1,11 +1,10 @@
-    import XCTest
-    @testable import InteractiveDismissModal
+@testable import InteractiveDismissModal
+import XCTest
 
-    final class InteractiveDismissModalTests: XCTestCase {
-        func testExample() {
-            // This is an example of a functional test case.
-            // Use XCTAssert and related functions to verify your tests produce the correct
-            // results.
-            XCTAssertEqual(InteractiveDismissModal().text, "Hello, World!")
-        }
+final class InteractiveDismissModalTests: XCTestCase {
+    func testExample() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct
+        // results.
     }
+}
